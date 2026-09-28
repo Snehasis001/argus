@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: argus-aml-platform
+    env: node
+    plan: free
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production

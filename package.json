@@ -1,0 +1,19 @@
+{
+  "name": "argus-aml-platform",
+  "version": "1.0.0",
+  "description": "ARGUS — Autonomous Anti-Money Laundering Investigation Platform",
+  "main": "server/server.js",
+  "scripts": {
+    "build": "npm run build --prefix client && npm install --prefix server",
+    "start": "node server/server.js"
+  },
+  "keywords": [
+    "aml",
+    "agentic-ai",
+    "compliance",
+    "fraud-detection",
+    "financial-crime"
+  ],
+  "author": "Snehasis001",
+  "license": "MIT"
+}
