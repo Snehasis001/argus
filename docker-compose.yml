@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: argus-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - argus-network
+
+  ml-service:
+    build:
+      context: ./ml-service
+      dockerfile: Dockerfile
+    container_name: argus-ml-service
+    restart: unless-stopped
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+    networks:
+      - argus-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: argus-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/argus
+      - ML_SERVICE_URL=http://ml-service:8001
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+      - ml-service
+    networks:
+      - argus-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: argus-client
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+    networks:
+      - argus-network
+
+volumes:
+  mongo-data:
+
+networks:
+  argus-network:
+    driver: bridge
