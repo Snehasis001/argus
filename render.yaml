@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: argus-aml-platform
+    name: argus
     env: node
     plan: free
     buildCommand: npm run build

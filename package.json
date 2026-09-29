@@ -4,7 +4,7 @@
   "description": "ARGUS — Autonomous Anti-Money Laundering Investigation Platform",
   "main": "server/server.js",
   "scripts": {
-    "build": "npm run build --prefix client && npm install --prefix server",
+    "build": "npm install --include=dev --prefix client && npm run build --prefix client && npm install --prefix server",
     "start": "node server/server.js"
   },
   "keywords": [
